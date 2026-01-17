@@ -1,0 +1,105 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "spikelink"
+version = "0.1.0"
+description = "Spike-native transport for neuromorphic systems"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.9"
+authors = [
+    { name = "Lightborne Intelligence", email = "dev@lightborneintelligence.com" }
+]
+keywords = [
+    "neuromorphic",
+    "spiking",
+    "neural",
+    "transport",
+    "protocol",
+    "ebrains",
+    "spiking-neural-networks",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: System :: Networking",
+]
+
+dependencies = [
+    "numpy>=1.20",
+]
+
+[project.optional-dependencies]
+neo = [
+    "neo>=0.12",
+    "quantities>=0.14",
+]
+elephant = [
+    "neo>=0.12",
+    "quantities>=0.14",
+    "elephant>=1.0",
+]
+full = [
+    "neo>=0.12",
+    "quantities>=0.14",
+    "elephant>=1.0",
+]
+hw = [
+    "pyserial>=3.5",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "mypy>=1.0",
+    "ruff>=0.1",
+]
+
+[project.urls]
+Homepage = "https://lightborneintelligence.com"
+Documentation = "https://spikelink.readthedocs.io"
+Repository = "https://github.com/LightborneIntelligence/spikelink"
+Issues = "https://github.com/LightborneIntelligence/spikelink/issues"
+
+[project.scripts]
+spikelink = "spikelink.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/spikelink"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/README.md",
+    "/LICENSE",
+    "/CHANGELOG.md",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --cov=spikelink --cov-report=term-missing"
+
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "N", "W"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
