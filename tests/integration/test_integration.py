@@ -27,8 +27,7 @@ class TestEndToEnd:
         packets = codec.encode_train(train)
 
         # Decode
-        recovered = codec.decode_packets(packets)
-
+        _recovered = codec.decode_packets(packets)
         # Verify
         suite = VerificationSuite(codec)
         report = suite.run_all(train)
