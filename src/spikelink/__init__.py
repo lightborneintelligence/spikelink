@@ -27,18 +27,17 @@ __author__ = "Jesus Carrasco"
 __license__ = "Apache-2.0"
 
 # Core types - RELATIVE IMPORTS (note the leading dot)
-from .types.spiketrain import SpikeTrain
+# Convenience API
+from .api import decode, encode, verify
 
 # Core protocol
 from .core.codec import SpikelinkCodec
 from .core.packet import SpikelinkPacket
+from .types.spiketrain import SpikeTrain
+from .verification.degradation import DegradationProfiler
 
 # Verification
 from .verification.suite import VerificationSuite
-from .verification.degradation import DegradationProfiler
-
-# Convenience API
-from .api import encode, decode, verify
 
 __all__ = [
     # Version

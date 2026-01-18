@@ -1,11 +1,19 @@
 """SpikeLink verification tools."""
 
-from spikelink.verification.suite import VerificationSuite, VerificationResult, VerificationReport
-from spikelink.verification.degradation import DegradationProfiler, DegradationProfile, DegradationPoint
+from spikelink.verification.degradation import (
+    DegradationPoint,
+    DegradationProfile,
+    DegradationProfiler,
+)
+from spikelink.verification.suite import (
+    VerificationReport,
+    VerificationResult,
+    VerificationSuite,
+)
 
 __all__ = [
     "VerificationSuite",
-    "VerificationResult", 
+    "VerificationResult",
     "VerificationReport",
     "DegradationProfiler",
     "DegradationProfile",
