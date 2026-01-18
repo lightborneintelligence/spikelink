@@ -8,22 +8,18 @@ version = "0.1.0"
 description = "Spike-native transport for neuromorphic systems"
 readme = "README.md"
 license = "Apache-2.0"
-requires-python = ">=3.9"
 authors = [
-    { name = "Jesus Carrasco", email = "dev@lightborneintelligence.com" },
-    { name = "Lightborne Intelligence" }
+    { name = "Lightborne Intelligence", email = "contact@lightborneintelligence.com" }
 ]
 keywords = [
     "neuromorphic",
     "spiking",
     "neural",
-    "transport",
-    "protocol",
-    "ebrains",
-    "spiking-neural-networks",
-    "spike-train",
+    "spinnaker",
+    "brainscales",
     "neo",
-    "elephant",
+    "ebrains",
+    "spike-train",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -35,40 +31,35 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
-    "Topic :: System :: Networking",
 ]
-
+requires-python = ">=3.9"
 dependencies = [
-    "numpy>=1.20",
+    "numpy>=1.20.0",
 ]
 
 [project.optional-dependencies]
 neo = [
-    "neo>=0.12",
-    "quantities>=0.14",
+    "neo>=0.12.0",
+    "quantities>=0.14.0",
 ]
 elephant = [
-    "neo>=0.12",
-    "quantities>=0.14",
-    "elephant>=1.0",
+    "neo>=0.12.0",
+    "quantities>=0.14.0",
+    "elephant>=0.12.0",
 ]
 full = [
-    "neo>=0.12",
-    "quantities>=0.14",
-    "elephant>=1.0",
-]
-hw = [
-    "pyserial>=3.5",
+    "neo>=0.12.0",
+    "quantities>=0.14.0",
+    "elephant>=0.12.0",
 ]
 dev = [
-    "pytest>=7.0",
-    "pytest-cov>=4.0",
-    "black>=23.0",
-    "mypy>=1.0",
-    "ruff>=0.1",
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
 ]
 
 [project.urls]
@@ -77,31 +68,26 @@ Documentation = "https://spikelink.readthedocs.io"
 Repository = "https://github.com/lightborneintelligence/spikelink"
 Issues = "https://github.com/lightborneintelligence/spikelink/issues"
 
+[tool.hatch.build.targets.sdist]
+include = ["/src"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/spikelink"]
 
-[tool.hatch.build.targets.sdist]
-include = [
-    "/src",
-    "/tests",
-    "/README.md",
-    "/LICENSE",
-    "/CHANGELOG.md",
-]
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v --cov=spikelink --cov-report=term-missing"
 
 [tool.black]
-line-length = 100
+line-length = 88
 target-version = ["py39", "py310", "py311", "py312"]
 
 [tool.ruff]
-line-length = 100
-select = ["E", "F", "I", "N", "W"]
+line-length = 88
+select = ["E", "F", "W", "I", "N"]
+ignore = ["E501"]
 
 [tool.mypy]
 python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
+ignore_missing_imports = true
