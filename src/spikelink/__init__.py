@@ -22,7 +22,7 @@ License: Apache-2.0
 Copyright (c) 2026 Lightborne Intelligence
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Jesus Carrasco"
 __license__ = "Apache-2.0"
 
