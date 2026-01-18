@@ -36,28 +36,24 @@ class NeoAdapter:
         >>> recovered_neo = NeoAdapter.to_neo(our_train)
     """
 
-    @staticmethod
-    def from_neo(neo_train: "neo.SpikeTrain") -> SpikeTrain:
-        """
-        Convert a Neo SpikeTrain to a SpikeLink SpikeTrain.
-
-        Args:
-            neo_train: Neo SpikeTrain object
-
-        Returns:
-            SpikeLink SpikeTrain
-        """
-        try:
-            import neo  # noqa: F401
-            import quantities as pq  # noqa: F401
-        except ImportError:
-            raise ImportError(
-                "Neo adapter requires neo and quantities packages. "
-                "Install with: pip install spikelink[neo]"
-            )
-
-        # Extract times as float array (rescale to seconds)
-        times = neo_train.rescale(pq.s).magnitude
+   @staticmethod
+def from_neo(neo_train: "neo.SpikeTrain") -> SpikeTrain:
+    """
+    Convert a Neo SpikeTrain to a SpikeLink SpikeTrain.
+    Args:
+        neo_train: Neo SpikeTrain object
+    Returns:
+        SpikeLink SpikeTrain
+    """
+    try:
+        import quantities as pq
+    except ImportError:
+        raise ImportError(
+            "Neo adapter requires neo and quantities packages. "
+            "Install with: pip install spikelink[neo]"
+        )
+    # Extract times as float array (rescale to seconds)
+    times = neo_train.rescale(pq.s).magnitude
 
         # Extract time bounds
         t_start = float(neo_train.t_start.rescale(pq.s).magnitude)
