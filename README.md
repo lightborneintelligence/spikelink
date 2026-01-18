@@ -4,7 +4,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/spikelink)](https://pypi.org/project/spikelink/)
 [![Python](https://img.shields.io/pypi/pyversions/spikelink)](https://pypi.org/project/spikelink/)
-[![License](https://img.shields.io/pypi/l/spikelink)](https://github.com/lightborneintelligence/spikelink/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Tests](https://github.com/lightborneintelligence/spikelink/actions/workflows/ci.yml/badge.svg)](https://github.com/lightborneintelligence/spikelink/actions)
 
 ---
