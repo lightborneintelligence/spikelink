@@ -4,8 +4,8 @@
 
 [![PyPI](https://img.shields.io/pypi/v/spikelink)](https://pypi.org/project/spikelink/)
 [![Python](https://img.shields.io/pypi/pyversions/spikelink)](https://pypi.org/project/spikelink/)
-[![License](https://img.shields.io/pypi/l/spikelink)](https://github.com/LightborneIntelligence/spikelink/blob/main/LICENSE)
-[![Tests](https://github.com/LightborneIntelligence/spikelink/actions/workflows/ci.yml/badge.svg)](https://github.com/LightborneIntelligence/spikelink/actions)
+[![License](https://img.shields.io/pypi/l/spikelink)](https://github.com/lightborneintelligence/spikelink/blob/main/LICENSE)
+[![Tests](https://github.com/lightborneintelligence/spikelink/actions/workflows/ci.yml/badge.svg)](https://github.com/lightborneintelligence/spikelink/actions)
 
 ---
 
@@ -83,7 +83,8 @@ passed = spikelink.verify(original, recovered)
 ### Neo Integration
 
 ```python
-from spikelink import NeoAdapter, SpikelinkCodec
+from spikelink.adapters import NeoAdapter
+from spikelink import SpikelinkCodec
 import neo
 import quantities as pq
 
@@ -110,7 +111,7 @@ from spikelink import VerificationSuite, DegradationProfiler
 # Run verification suite
 suite = VerificationSuite()
 results = suite.run_all(original_train)
-suite.print_results()
+suite.print_results(results)
 
 # Profile degradation under noise
 profiler = DegradationProfiler()
@@ -126,10 +127,10 @@ SpikeLink degrades proportionally under noise — precision loss, not data loss:
 
 | Noise % | Decimals Preserved |
 |---------|-------------------|
-| 0.0%    | 4 |
-| 0.1%    | 3 |
-| 1.0%    | 2 |
-| 10.0%   | 1 |
+| 0.0%    | 6                 |
+| 0.1%    | 5                 |
+| 1.0%    | 4                 |
+| 10.0%   | 3                 |
 
 ✓ Monotonic degradation confirmed (confidence never inflates)
 
@@ -164,5 +165,3 @@ Apache 2.0 — See [LICENSE](LICENSE) for details.
 
 **Lightborne Intelligence**  
 *Truth > Consensus · Sovereignty > Control · Coherence > Speed*
-
-[lightborneintelligence.com](https://lightborneintelligence.com)
