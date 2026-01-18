@@ -5,33 +5,31 @@ All notable changes to SpikeLink will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-## [0.1.0] - 2026-01-17
+## [0.1.1] - 2026-01-17
 
 ### Added
 
-- Initial release of SpikeLink
-- Core `SpikeTrain` data type for spike sequences
-- `SpikelinkCodec` for encoding/decoding spike trains to packets
-- `SpikelinkPacket` wire format with bounded precision transport
-- `VerificationSuite` for protocol correctness validation
-- `DegradationProfiler` for noise characterization
-- `NeoAdapter` for EBRAINS ecosystem integration
-- Convenience API: `encode()`, `decode()`, `verify()`
-- Stress test generators: `generate_population()`, `generate_burst()`, `generate_regular()`
-- Comprehensive test suite (unit + integration)
-- CI/CD pipeline with GitHub Actions
-- PyPI publishing via Trusted Publishers
+- Initial release
+- Core `SpikeTrain` data type
+- `SpikelinkCodec` for encoding/decoding spike trains to 32-byte packets
+- `SpikelinkPacket` wire format (7 spikes per packet)
+- `TransportSimulator` for noise injection testing
+- `NeoAdapter` for EBRAINS ecosystem interoperability
+- `VerificationSuite` with 6-axis validation
+- `DegradationProfiler` for graceful degradation analysis
+- `StatisticalAnalysis` with Elephant-compatible metrics
+- `PyNNStyleGenerator` for stress testing
+- Convenience API (`encode`, `decode`, `verify`)
 
-### Key Properties
+### Validation
 
-- Spike-native transport (no ADC/DAC conversion)
-- Graceful degradation under noise (precision loss, not data loss)
-- EBRAINS compatible (Neo, Elephant, PyNN validated)
-- Time-coherent with bounded timing behavior
+- Neo round-trip compatibility verified
+- Elephant statistical fidelity confirmed
+- Graceful degradation monotonicity proven
+- PyNN-style population stress tests passed (100+ neurons)
 
 ---
 
-**Lightborne Intelligence**  
-*Truth > Consensus · Sovereignty > Control · Coherence > Speed*
+**Lightborne Intelligence** 
+
+— *Truth > Consensus · Sovereignty > Control · Coherence > Speed*
