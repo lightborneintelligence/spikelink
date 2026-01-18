@@ -48,8 +48,8 @@ class NeoAdapter:
             SpikeLink SpikeTrain
         """
         try:
-            import neo
-            import quantities as pq
+            import neo  # noqa: F401
+            import quantities as pq  # noqa: F401
         except ImportError:
             raise ImportError(
                 "Neo adapter requires neo and quantities packages. "
