@@ -10,7 +10,7 @@
 ---
 
 > **Note on representation**  
-> SpikeLink does not replace digital computation. It operates post-binary within digital systems by transporting spike symbols without forcing early binary collapse.
+> SpikeLink does not replace digital computation. It operates *post-binary within digital systems* by transporting spike symbols without forcing early binary collapse.
 
 ---
 
@@ -23,12 +23,12 @@
 | Cliff-edge failure | Graceful degradation |
 | Precision loss | Symbol magnitude continuity |
 
-**Key Properties:**
+**Key Properties**
 
-- **Spike-native**: No ADC/DAC conversion stages
-- **Graceful degradation**: Precision loss under noise, not data loss
-- **EBRAINS compatible**: Validated against Neo, Elephant, PyNN workflows
-- **Time-coherent**: Bounded timing, predictable behavior
+- **Spike-native**: No ADC/DAC conversion stages  
+- **Graceful degradation**: Precision loss under noise, not data loss  
+- **EBRAINS compatible**: Verified against Neo, Elephant, PyNN workflows  
+- **Time-coherent**: Bounded timing, predictable behavior under fixed conditions  
 
 ---
 
@@ -36,7 +36,7 @@
 
 ```bash
 pip install spikelink
-```
+````
 
 With EBRAINS ecosystem support:
 
@@ -67,18 +67,23 @@ print(f"Original:  {train.times}")
 print(f"Recovered: {recovered.times}")
 ```
 
+---
+
 ### Convenience API
 
 ```python
 import spikelink
 
-# One-liner encode/decode
-packets = spikelink.encode([0.1, 0.2, 0.3, 0.4, 0.5])
+original = [0.1, 0.2, 0.3, 0.4, 0.5]
+
+packets = spikelink.encode(original)
 recovered = spikelink.decode(packets)
 
-# Verify round-trip
 passed = spikelink.verify(original, recovered)
+print("Verification:", "PASS" if passed else "FAIL")
 ```
+
+---
 
 ### Neo Integration
 
@@ -108,12 +113,10 @@ recovered_neo = NeoAdapter.to_neo(recovered)
 ```python
 from spikelink import VerificationSuite, DegradationProfiler
 
-# Run verification suite
 suite = VerificationSuite()
-results = suite.run_all(original_train)
+results = suite.run_all(train)
 suite.print_results(results)
 
-# Profile degradation under noise
 profiler = DegradationProfiler()
 profile = profiler.profile(train, noise_levels=[0, 0.1, 1.0, 10.0])
 profiler.print_profile(profile)
@@ -123,14 +126,14 @@ profiler.print_profile(profile)
 
 ## Graceful Degradation
 
-SpikeLink degrades proportionally under noise — precision loss, not data loss:
+SpikeLink degrades proportionally under noise — **precision loss, not data loss**:
 
 | Noise % | Decimals Preserved |
-|---------|-------------------|
-| 0.0%    | 6                 |
-| 0.1%    | 5                 |
-| 1.0%    | 4                 |
-| 10.0%   | 3                 |
+| ------- | ------------------ |
+| 0.0%    | 4                  |
+| 0.1%    | 3                  |
+| 1.0%    | 2                  |
+| 10.0%   | 1                  |
 
 ✓ Monotonic degradation confirmed (confidence never inflates)
 
@@ -138,9 +141,9 @@ SpikeLink degrades proportionally under noise — precision loss, not data loss:
 
 ## Documentation
 
-- [Full Documentation](https://spikelink.readthedocs.io)
-- [Protocol Specification](https://spikelink.readthedocs.io/specifications/protocol/)
-- [EBRAINS Integration Guide](https://spikelink.readthedocs.io/tutorials/neo-integration/)
+* [Full Documentation](https://spikelink.readthedocs.io)
+* [Protocol Specification](https://spikelink.readthedocs.io/specifications/protocol/)
+* [EBRAINS Integration Guide](https://spikelink.readthedocs.io/tutorials/neo-integration/)
 
 ---
 
@@ -148,10 +151,10 @@ SpikeLink degrades proportionally under noise — precision loss, not data loss:
 
 SpikeLink has been externally verified against EBRAINS workflows:
 
-- **Neo-compatible**: SpikeTrain round-trip verified
-- **Elephant-verified**: Statistical fidelity confirmed
-- **PyNN stress-tested**: 380 neurons, 13,344 spikes, 100% preservation
-- **Ready for integration with SpiNNaker and BrainScaleS**
+* **Neo-compatible**: SpikeTrain round-trip verified
+* **Elephant-verified**: Statistical fidelity confirmed
+* **PyNN stress-tested**: 380 neurons, 13,344 spikes, 100% symbol preservation
+* **Ready for integration with SpiNNaker and BrainScaleS**
 
 ---
 
@@ -163,5 +166,6 @@ Apache 2.0 — See [LICENSE](LICENSE) for details.
 
 ## About
 
-**Lightborne Intelligence**  
+**Lightborne Intelligence**
+
 *Truth > Consensus · Sovereignty > Control · Coherence > Speed*
