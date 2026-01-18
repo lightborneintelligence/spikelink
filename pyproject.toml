@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "spikelink"
-version = "0.1.0"
+version = "0.1.1"
 description = "Spike-native transport for neuromorphic systems"
 readme = "README.md"
 license = "Apache-2.0"
@@ -74,8 +74,8 @@ include = ["/src"]
 [tool.hatch.build.targets.wheel]
 packages = ["src/spikelink"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
+[tool.hatch.build.targets.wheel.sources]
+"src" = ""
 
 [tool.black]
 line-length = 88
