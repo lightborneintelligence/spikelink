@@ -26,19 +26,19 @@ __version__ = "0.1.0"
 __author__ = "Jesus Carrasco"
 __license__ = "Apache-2.0"
 
-# Core types
-from spikelink.types.spiketrain import SpikeTrain
+# Core types - RELATIVE IMPORTS (note the leading dot)
+from .types.spiketrain import SpikeTrain
 
 # Core protocol
-from spikelink.core.codec import SpikelinkCodec
-from spikelink.core.packet import SpikelinkPacket
+from .core.codec import SpikelinkCodec
+from .core.packet import SpikelinkPacket
 
 # Verification
-from spikelink.verification.suite import VerificationSuite
-from spikelink.verification.degradation import DegradationProfiler
+from .verification.suite import VerificationSuite
+from .verification.degradation import DegradationProfiler
 
 # Convenience API
-from spikelink.api import encode, decode, verify
+from .api import encode, decode, verify
 
 __all__ = [
     # Version
