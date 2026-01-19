@@ -4,10 +4,10 @@ build-backend = "hatchling.build"
 
 [project]
 name = "spikelink"
-version = "0.1.1"
+version = "0.1.2"
 description = "Spike-native transport for neuromorphic systems"
 readme = "README.md"
-license = "Apache-2.0"
+license = { text = "Apache-2.0" }
 authors = [
     { name = "Lightborne Intelligence", email = "contact@lightborneintelligence.com" }
 ]
@@ -45,8 +45,6 @@ neo = [
     "quantities>=0.14.0",
 ]
 elephant = [
-    "neo>=0.12.0",
-    "quantities>=0.14.0",
     "elephant>=0.12.0",
 ]
 full = [
@@ -69,13 +67,20 @@ Repository = "https://github.com/lightborneintelligence/spikelink"
 Issues = "https://github.com/lightborneintelligence/spikelink/issues"
 
 [tool.hatch.build.targets.sdist]
-include = ["/src"]
+include = [
+    "/src",
+    "/README.md",
+    "/LICENSE",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/spikelink"]
 
 [tool.hatch.build.targets.wheel.sources]
 "src" = ""
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [tool.black]
 line-length = 88
