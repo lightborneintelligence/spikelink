@@ -1,0 +1,78 @@
+<svg
+  width="120"
+  height="120"
+  viewBox="0 0 120 120"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width="120" height="120" fill="none"/>
+  
+  <!-- Transport link -->
+  <path
+    d="M30 60 H90"
+    stroke="#8a8a8a"
+    stroke-width="4"
+    stroke-linecap="round"
+  />
+  
+  <!-- Spike waveform -->
+  <path
+    d="M40 72 L50 32 L60 92 L70 42 L80 72"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="4"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+  />
+  
+  <!-- DNA back strand (behind spike) -->
+  <path
+    d="M50 15
+       C35 25, 35 35, 50 42
+       C65 49, 65 51, 50 58"
+    fill="none"
+    stroke="#b00000"
+    stroke-width="2"
+    stroke-linecap="round"
+    opacity="0.4"
+  />
+  <path
+    d="M70 62
+       C85 69, 85 79, 70 86
+       C55 93, 55 100, 70 105"
+    fill="none"
+    stroke="#b00000"
+    stroke-width="2"
+    stroke-linecap="round"
+    opacity="0.4"
+  />
+  
+  <!-- DNA front strand -->
+  <path
+    d="M70 15
+       C85 25, 85 35, 70 42
+       C55 49, 55 51, 70 58"
+    fill="none"
+    stroke="#b00000"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    opacity="0.95"
+  />
+  <path
+    d="M50 62
+       C35 69, 35 79, 50 86
+       C65 93, 65 100, 50 105"
+    fill="none"
+    stroke="#b00000"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    opacity="0.95"
+  />
+  
+  <!-- Rungs (full detail) -->
+  <line x1="50" y1="20" x2="70" y2="20" stroke="#b00000" stroke-width="1.5" opacity="0.5"/>
+  <line x1="42" y1="32" x2="78" y2="32" stroke="#b00000" stroke-width="1.5" opacity="0.6"/>
+  <line x1="50" y1="42" x2="70" y2="42" stroke="#b00000" stroke-width="1.5" opacity="0.5"/>
+  <line x1="50" y1="78" x2="70" y2="78" stroke="#b00000" stroke-width="1.5" opacity="0.5"/>
+  <line x1="42" y1="88" x2="78" y2="88" stroke="#b00000" stroke-width="1.5" opacity="0.6"/>
+  <line x1="50" y1="100" x2="70" y2="100" stroke="#b00000" stroke-width="1.5" opacity="0.5"/>
+</svg>
