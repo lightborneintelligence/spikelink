@@ -2,7 +2,8 @@
 <p align="center">
   <img src="docs/spikelink-logo-120.svg" alt="SpikeLink" width="120">
 </p>
-**Spike-native transport for neuromorphic systems.**
+
+>**Spike-native transport for neuromorphic systems.**
 
 [![PyPI](https://img.shields.io/pypi/v/spikelink)](https://pypi.org/project/spikelink/)
 [![Python](https://img.shields.io/pypi/pyversions/spikelink)](https://pypi.org/project/spikelink/)
