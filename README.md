@@ -16,7 +16,26 @@
 > SpikeLink does not replace digital computation. It operates *post-binary within digital systems* by transporting spike symbols without forcing early binary collapse.
 
 ---
-
+Repository Structure 
+```
+spikelink/
+|
+├── src/
+│   └── spikelink/          
+│       ├── __init__.py
+│       ├── api.py
+│       ├── core/
+│       ├── types/
+│       ├── adapters/
+│       ├── verification/
+│       ├── stress/
+│       └── hw/
+├── tests/
+├── docs/
+├── pyproject.toml
+├── README.md
+└── LICENSE
+```
 ## Why SpikeLink?
 
 | Traditional Transport | SpikeLink |
