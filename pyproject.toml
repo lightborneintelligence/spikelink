@@ -9,7 +9,7 @@ description = "Spike-native transport for neuromorphic systems"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 authors = [
-    { name = "Lightborne Intelligence", email = "contact@lightborneintelligence.com" }
+    { name = "Lightborne Intelligence", email = "contact@lightborneintelligence.org" }
 ]
 keywords = [
     "neuromorphic",
