@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "spikelink"
-version = "0.1.2"
+version = "0.2.0"
 description = "Spike-native transport for neuromorphic systems"
 readme = "README.md"
 license = { text = "Apache-2.0" }
@@ -21,10 +21,16 @@ keywords = [
     "brainscales",
     "neo",
     "ebrains",
+    "brian2",
+    "tonic",
+    "dvs",
+    "event-camera",
     "spike-train",
     "spike-trains",
     "event-based",
     "signal-transport",
+    "wave-native",
+    "harmonic-transform",
     "scientific-computing",
 ]
 
@@ -47,18 +53,37 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# Platform adapters
 neo = [
     "neo>=0.12.0",
     "quantities>=0.14.0",
 ]
+brian2 = [
+    "brian2>=2.5.0",
+]
+tonic = [
+    "tonic>=1.0.0",
+]
+# Analysis tools
 elephant = [
     "elephant>=0.12.0",
 ]
+# Bundle: all platform adapters
+adapters = [
+    "neo>=0.12.0",
+    "quantities>=0.14.0",
+    "brian2>=2.5.0",
+    "tonic>=1.0.0",
+]
+# Bundle: everything
 full = [
     "neo>=0.12.0",
     "quantities>=0.14.0",
+    "brian2>=2.5.0",
+    "tonic>=1.0.0",
     "elephant>=0.12.0",
 ]
+# Development
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
