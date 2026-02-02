@@ -20,25 +20,40 @@ Copyright (c) 2026 Lightborne Intelligence
 __version__ = "0.2.0"
 __author__ = "Jesus Carrasco"
 __license__ = "Apache-2.0"
+
 # Core types - RELATIVE IMPORTS (note the leading dot)
 # Convenience API
 from .api import decode, encode, verify
+
 # Core protocol (v1)
 from .core.codec import SpikelinkCodec
 from .core.packet import SpikelinkPacket
 from .types.spiketrain import SpikeTrain
+
 # V2 protocol
 from .v2.codec import SpikelinkCodecV2
 from .v2.packet import SpikelinkPacketV2
 from .v2.types import SpikeTrainV2
 from .v2.metrics import compute_metrics
-# Adapters
-from .adapters.neo import NeoAdapter
-from .adapters.brian2 import Brian2Adapter
-from .adapters.tonic import TonicAdapter
+
 # Verification
 from .verification.suite import VerificationSuite
 from .verification.degradation import DegradationProfiler
+
+# Adapters - LAZY LOADING (optional dependencies)
+def __getattr__(name):
+    """Lazy load adapters that require optional dependencies."""
+    if name == "NeoAdapter":
+        from .adapters.neo import NeoAdapter
+        return NeoAdapter
+    elif name == "Brian2Adapter":
+        from .adapters.brian2 import Brian2Adapter
+        return Brian2Adapter
+    elif name == "TonicAdapter":
+        from .adapters.tonic import TonicAdapter
+        return TonicAdapter
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
 __all__ = [
     # Version
     "__version__",
@@ -52,7 +67,7 @@ __all__ = [
     "SpikelinkCodecV2",
     "SpikelinkPacketV2",
     "compute_metrics",
-    # Adapters
+    # Adapters (lazy-loaded)
     "NeoAdapter",
     "Brian2Adapter",
     "TonicAdapter",
@@ -64,6 +79,7 @@ __all__ = [
     "decode",
     "verify",
 ]
+
 def get_version() -> str:
     """Return the current SpikeLink version."""
     return __version__
