@@ -131,20 +131,49 @@ profiler.print_profile(profile)
 SpikeLink degradation is designed to be monotonic: confidence should never inflate under noise.
 
 Repository structure
-spikelink/
+spikelink/                       
 ├── src/
-│   └── spikelink/
-│       ├── __init__.py
-│       ├── api.py
-│       ├── core/
+│   └── spikelink/               
+│       ├── __init__.py          
+│       ├── api.py               
 │       ├── types/
+│       │   ├── __init__.py
+│       │   └── spiketrain.py   
+│       ├── core/
+│       │   ├── __init__.py     
+│       │   ├── codec.py         
+│       │   └── packet.py       
+│       ├── waveml/             
+│       │   ├── __init__.py      
+│       │   └── core.py          
+│       ├── v2/                  
+│       │   ├── __init__.py      
+│       │   ├── codec.py         
+│       │   ├── packet.py        
+│       │   ├── types.py         
+│       │   └── metrics.py       
 │       ├── adapters/
+│       │   ├── __init__.py      
+│       │   ├── neo.py           
+│       │   ├── brian2.py        
+│       │   └── tonic.py         
 │       ├── verification/
+│       │   ├── __init__.py
+│       │   ├── suite.py         
+│       │   └── degradation.py  
 │       ├── stress/
+│       │   ├── __init__.py
+│       │   └── generators.py    
 │       └── hw/
-├── tests/
+│           └── __init__.py      
+├── tests/                       
+│   ├── test_spikelink_v2.py     
+│   ├── test_platform_neo.py     
+│   ├── test_platform_brian2.py  
+│   └── test_platform_tonic.py   
 ├── docs/
-├── pyproject.toml
+│   └── ARCHITECTURE.md          
+├── pyproject.toml               
 ├── README.md
 └── LICENSE
 Documentation
