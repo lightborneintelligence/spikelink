@@ -6,7 +6,7 @@ Requires: pip install spikelink[brian2]
 """
 
 import numpy as np
-from ..v2.types import SpikeTrainV2
+from ..v2.types import V2SpikeTrain
 
 
 class Brian2Adapter:
@@ -34,7 +34,7 @@ class Brian2Adapter:
     
     @staticmethod
     def from_spike_monitor(monitor, neuron_index: int = None, 
-                           default_amplitude: float = 1.0) -> SpikeTrainV2:
+                           default_amplitude: float = 1.0) -> V2SpikeTrain:
         """
         Convert Brian2 SpikeMonitor → v2 SpikeTrain.
         
@@ -45,7 +45,7 @@ class Brian2Adapter:
             default_amplitude: Amplitude to assign to all spikes.
         
         Returns:
-            SpikeTrainV2: Wave-enhanced spike train
+            V2SpikeTrain: Wave-enhanced spike train
         """
         brian2 = Brian2Adapter._check_brian2()
         
@@ -61,7 +61,7 @@ class Brian2Adapter:
         times = times[sort_idx]
         
         amplitudes = np.full(len(times), default_amplitude)
-        return SpikeTrainV2(times=times, amplitudes=amplitudes)
+        return V2SpikeTrain(times=times, amplitudes=amplitudes)
     
     @staticmethod
     def from_spike_monitor_population(monitor, 
@@ -74,7 +74,7 @@ class Brian2Adapter:
             default_amplitude: Amplitude to assign to all spikes.
         
         Returns:
-            list[SpikeTrainV2]: List of spike trains, indexed by neuron ID
+            list[V2SpikeTrain]: List of spike trains, indexed by neuron ID
         """
         brian2 = Brian2Adapter._check_brian2()
         
@@ -91,7 +91,7 @@ class Brian2Adapter:
             mask = indices == neuron_idx
             neuron_times = np.sort(times[mask])
             amplitudes = np.full(len(neuron_times), default_amplitude)
-            trains.append(SpikeTrainV2(times=neuron_times, amplitudes=amplitudes))
+            trains.append(V2SpikeTrain(times=neuron_times, amplitudes=amplitudes))
         
         return trains
     
