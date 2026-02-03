@@ -61,5 +61,7 @@ class V2SpikeTrain:
 
 
 # Alias for backward compatibility within v2 module
+SpikeTrain = V2SpikeTrain
+
 # Public API alias (keeps top-level import stable)
 SpikeTrainV2 = V2SpikeTrain
