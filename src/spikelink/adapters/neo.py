@@ -7,7 +7,7 @@ Requires: pip install spikelink[neo]
 
 import numpy as np
 from ..types.spiketrain import SpikeTrain
-from ..v2.types import SpikeTrainV2
+from ..v2.types import V2SpikeTrain
 
 
 class NeoAdapter:
@@ -83,15 +83,15 @@ class NeoAdapterV2:
             )
     
     @staticmethod
-    def from_neo(neo_train, default_amplitude: float = 1.0) -> SpikeTrainV2:
+    def from_neo(neo_train, default_amplitude: float = 1.0) -> V2SpikeTrain:
         """Convert Neo SpikeTrain → v2 SpikeTrain."""
         neo, pq = NeoAdapterV2._check_neo()
         times = np.array(neo_train.rescale('s').magnitude, dtype=np.float64)
         amplitudes = np.full(len(times), default_amplitude)
-        return SpikeTrainV2(times=times, amplitudes=amplitudes)
+        return V2SpikeTrain(times=times, amplitudes=amplitudes)
     
     @staticmethod
-    def to_neo(v2_train: SpikeTrainV2, t_stop: float = None):
+    def to_neo(v2_train: V2SpikeTrain, t_stop: float = None):
         """Convert v2 SpikeTrain → Neo SpikeTrain."""
         neo, pq = NeoAdapterV2._check_neo()
         times = v2_train.times
@@ -100,11 +100,11 @@ class NeoAdapterV2:
         return neo.SpikeTrain(times=times * pq.s, t_stop=t_stop * pq.s)
     
     @staticmethod
-    def from_v1_spikelink(v1_train) -> SpikeTrainV2:
+    def from_v1_spikelink(v1_train) -> V2SpikeTrain:
         """Convert published spikelink v1 SpikeTrain → v2 SpikeTrain."""
         times = np.array(v1_train.times, dtype=np.float64)
         amplitudes = np.ones(len(times))
-        return SpikeTrainV2(times=times, amplitudes=amplitudes)
+        return V2SpikeTrain(times=times, amplitudes=amplitudes)
     
     @staticmethod
     def is_available() -> bool:
