@@ -1,96 +1,64 @@
 """
-SpikeLink — Spike-native transport for neuromorphic systems.
-SpikeLink transports spike symbols without forcing early binary collapse.
-It operates post-binary within digital systems, preserving symbol magnitude
-continuity and enabling graceful degradation under noise.
-Key Properties:
-- Spike-native: No ADC/DAC conversion stages
-- Graceful degradation: Precision loss under noise, not data loss
-- EBRAINS compatible: Validated against Neo, Elephant, PyNN workflows
-- Time-coherent: Bounded timing, predictable behavior
-Example:
-    >>> from spikelink import SpikeTrain, SpikelinkCodec
-    >>> train = SpikeTrain(times=[0.1, 0.2, 0.3, 0.4, 0.5])
-    >>> codec = SpikelinkCodec()
-    >>> packets = codec.encode_train(train)
-    >>> recovered = codec.decode_packets(packets)
-License: Apache-2.0
-Copyright (c) 2026 Lightborne Intelligence
+SpikeLink v2 Types — Wave-enhanced spike representations.
+Lightborne Intelligence
 """
-__version__ = "0.2.0"
-__author__ = "Jesus Carrasco"
-__license__ = "Apache-2.0"
-# Core types - RELATIVE IMPORTS (note the leading dot)
-# Convenience API
-from .api import decode, encode, verify
-# Core protocol (v1)
-from .core.codec import SpikelinkCodec
-from .core.packet import SpikelinkPacket
-from .types.spiketrain import SpikeTrain
-# V2 protocol
-from .v2.codec import SpikelinkCodecV2
-from .v2.packet import SpikelinkPacketV2
-from .v2.types import SpikeTrainV2
-from .v2.metrics import compute_metrics
-# Verification
-from .verification.suite import VerificationSuite
-from .verification.degradation import DegradationProfiler
+
+import numpy as np
+from dataclasses import dataclass
 
 
-# Adapters - LAZY LOADING (optional dependencies)
-def __getattr__(name):
-    """Lazy load adapters that require optional dependencies."""
-    if name == "NeoAdapter":
-        from .adapters.neo import NeoAdapter
-        return NeoAdapter
-    elif name == "NeoAdapterV2":
-        from .adapters.neo import NeoAdapterV2
-        return NeoAdapterV2
-    elif name == "Brian2Adapter":
-        from .adapters.brian2 import Brian2Adapter
-        return Brian2Adapter
-    elif name == "Brian2AdapterV2":
-        from .adapters.brian2 import Brian2AdapterV2
-        return Brian2AdapterV2
-    elif name == "TonicAdapter":
-        from .adapters.tonic import TonicAdapter
-        return TonicAdapter
-    elif name == "TonicAdapterV2":
-        from .adapters.tonic import TonicAdapterV2
-        return TonicAdapterV2
-    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+@dataclass
+class V2SpikeTrain:
+    """A sequence of spike events with timing and amplitude.
+    
+    Unlike v1 SpikeTrain (times only), v2 carries amplitude information
+    which enables wave-domain processing via Harmonic Transform.
+    
+    Attributes:
+        times: Spike timestamps in seconds (float64)
+        amplitudes: Spike amplitudes as continuous values (float64)
+    """
+    times: np.ndarray      # Spike timestamps (seconds)
+    amplitudes: np.ndarray  # Spike amplitudes (continuous)
+    
+    def __post_init__(self):
+        """Ensure arrays are numpy float64."""
+        if not isinstance(self.times, np.ndarray):
+            self.times = np.array(self.times, dtype=np.float64)
+        if not isinstance(self.amplitudes, np.ndarray):
+            self.amplitudes = np.array(self.amplitudes, dtype=np.float64)
+    
+    @property
+    def count(self) -> int:
+        """Number of spikes in this train."""
+        return len(self.times)
+    
+    @property
+    def duration(self) -> float:
+        """Duration from first to last spike (seconds)."""
+        if self.count == 0:
+            return 0.0
+        return float(self.times[-1] - self.times[0])
+    
+    @property
+    def mean_rate(self) -> float:
+        """Mean firing rate (Hz)."""
+        if self.duration == 0:
+            return 0.0
+        return self.count / self.duration
+    
+    def copy(self) -> 'V2SpikeTrain':
+        """Return a deep copy."""
+        return V2SpikeTrain(
+            times=self.times.copy(),
+            amplitudes=self.amplitudes.copy()
+        )
+    
+    def __repr__(self) -> str:
+        return (f"V2SpikeTrain(count={self.count}, "
+                f"duration={self.duration:.3f}s, "
+                f"rate={self.mean_rate:.1f}Hz)")
 
 
-__all__ = [
-    # Version
-    "__version__",
-    # Types (v1)
-    "SpikeTrain",
-    # Core (v1)
-    "SpikelinkCodec",
-    "SpikelinkPacket",
-    # V2 Protocol
-    "SpikeTrainV2",
-    "SpikelinkCodecV2",
-    "SpikelinkPacketV2",
-    "compute_metrics",
-    # Adapters (lazy-loaded)
-    "NeoAdapter",
-    "NeoAdapterV2",
-    "Brian2Adapter",
-    "Brian2AdapterV2",
-    "TonicAdapter",
-    "TonicAdapterV2",
-    # Verification
-    "VerificationSuite",
-    "DegradationProfiler",
-    # Convenience
-    "encode",
-    "decode",
-    "verify",
-]
-
-
-def get_version() -> str:
-    """Return the current SpikeLink version."""
-    return __version__
+# Alias for backward compatibility within v2 module
+SpikeTrain = V2SpikeTrain
