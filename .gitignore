@@ -12,3 +12,13 @@ htmlcov/
 .ruff_cache/
 venv/
 .env
+
+# macOS
+.DS_Store
+
+# Python venv
+.venv/
+venv/
+
+# local clones / nested dirs
+spikelink/
