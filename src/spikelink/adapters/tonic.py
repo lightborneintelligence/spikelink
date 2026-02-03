@@ -6,7 +6,7 @@ Requires: pip install spikelink[tonic]
 """
 
 import numpy as np
-from ..v2.types import SpikeTrainV2
+from ..v2.types import V2SpikeTrain
 
 
 class TonicAdapter:
@@ -42,7 +42,7 @@ class TonicAdapter:
     
     @staticmethod
     def from_events(events, time_unit: str = 'us',
-                    default_amplitude: float = 1.0) -> SpikeTrainV2:
+                    default_amplitude: float = 1.0) -> V2SpikeTrain:
         """
         Convert Tonic event array → v2 SpikeTrain (flattened).
         
@@ -52,7 +52,7 @@ class TonicAdapter:
             default_amplitude: Amplitude to assign to all events
         
         Returns:
-            SpikeTrainV2: All events as a single spike train
+            V2SpikeTrain: All events as a single spike train
         """
         times = np.array(events['t'], dtype=np.float64)
         
@@ -68,7 +68,7 @@ class TonicAdapter:
         times = times[sort_idx]
         
         amplitudes = np.full(len(times), default_amplitude)
-        return SpikeTrainV2(times=times, amplitudes=amplitudes)
+        return V2SpikeTrain(times=times, amplitudes=amplitudes)
     
     @staticmethod
     def from_events_by_channel(events, time_unit: str = 'us',
@@ -82,7 +82,7 @@ class TonicAdapter:
             default_amplitude: Amplitude to assign
         
         Returns:
-            dict: {(x, y, p): SpikeTrainV2} for each unique channel
+            dict: {(x, y, p): V2SpikeTrain} for each unique channel
         """
         times = np.array(events['t'], dtype=np.float64)
         x = np.array(events['x'])
@@ -103,12 +103,12 @@ class TonicAdapter:
             mask = (x == cx) & (y == cy) & (p == cp)
             ch_times = np.sort(times[mask])
             ch_amps = np.full(len(ch_times), default_amplitude)
-            channels[(cx, cy, cp)] = SpikeTrainV2(times=ch_times, amplitudes=ch_amps)
+            channels[(cx, cy, cp)] = V2SpikeTrain(times=ch_times, amplitudes=ch_amps)
         
         return channels
     
     @staticmethod
-    def to_events(v2_train: SpikeTrainV2, 
+    def to_events(v2_train: V2SpikeTrain, 
                   x: int = 0, y: int = 0, p: int = 1,
                   time_unit: str = 'us') -> np.ndarray:
         """
