@@ -20,25 +20,22 @@ Copyright (c) 2026 Lightborne Intelligence
 __version__ = "0.2.0"
 __author__ = "Jesus Carrasco"
 __license__ = "Apache-2.0"
-
 # Core types - RELATIVE IMPORTS (note the leading dot)
 # Convenience API
 from .api import decode, encode, verify
-
 # Core protocol (v1)
 from .core.codec import SpikelinkCodec
 from .core.packet import SpikelinkPacket
 from .types.spiketrain import SpikeTrain
-
 # V2 protocol
 from .v2.codec import SpikelinkCodecV2
 from .v2.packet import SpikelinkPacketV2
 from .v2.types import SpikeTrainV2
 from .v2.metrics import compute_metrics
-
 # Verification
 from .verification.suite import VerificationSuite
 from .verification.degradation import DegradationProfiler
+
 
 # Adapters - LAZY LOADING (optional dependencies)
 def __getattr__(name):
@@ -46,13 +43,23 @@ def __getattr__(name):
     if name == "NeoAdapter":
         from .adapters.neo import NeoAdapter
         return NeoAdapter
+    elif name == "NeoAdapterV2":
+        from .adapters.neo import NeoAdapterV2
+        return NeoAdapterV2
     elif name == "Brian2Adapter":
         from .adapters.brian2 import Brian2Adapter
         return Brian2Adapter
+    elif name == "Brian2AdapterV2":
+        from .adapters.brian2 import Brian2AdapterV2
+        return Brian2AdapterV2
     elif name == "TonicAdapter":
         from .adapters.tonic import TonicAdapter
         return TonicAdapter
+    elif name == "TonicAdapterV2":
+        from .adapters.tonic import TonicAdapterV2
+        return TonicAdapterV2
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
 
 __all__ = [
     # Version
@@ -69,8 +76,11 @@ __all__ = [
     "compute_metrics",
     # Adapters (lazy-loaded)
     "NeoAdapter",
+    "NeoAdapterV2",
     "Brian2Adapter",
+    "Brian2AdapterV2",
     "TonicAdapter",
+    "TonicAdapterV2",
     # Verification
     "VerificationSuite",
     "DegradationProfiler",
@@ -79,6 +89,7 @@ __all__ = [
     "decode",
     "verify",
 ]
+
 
 def get_version() -> str:
     """Return the current SpikeLink version."""
