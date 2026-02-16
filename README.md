@@ -1,9 +1,10 @@
-#SpikeLink
+##SpikeLink
 
 ![PyPI](https://img.shields.io/pypi/v/spikelink)
 ![Python](https://img.shields.io/pypi/pyversions/spikelink)
 ![License](https://img.shields.io/pypi/l/spikelink)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen)
+
 Spike-native transport for neuromorphic systems.
 Move spikes as spikes — preserving event identity, causal ordering, and bounded timing — with measurable degradation under noise.
 
@@ -61,7 +62,9 @@ Adapter Ecosystem
 
 SpikeLink now supports a full cross-platform adapter layer:
 
-Adapter	Target Platform	Status
+
+#Adapter	Target Platform	Status
+
 Neo	EBRAINS ecosystem	✅
 Brian2	Brian2 simulator	✅
 Tonic	Event camera datasets	✅
