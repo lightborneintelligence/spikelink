@@ -1,31 +1,8 @@
 """
 SpikeLink ecosystem adapters.
 
-Bridges to major neuronal simulation and analysis platforms:
-
-    NeoAdapter            — Neo / EBRAINS electrophysiology objects
-    PyNNAdapter           — PyNN simulator-independent populations
-    NestAdapter           — NEST simulator spike_generator / spike_recorder
-    Brian2Adapter         — Brian2 spiking neural network simulator
-    TonicAdapter          — Tonic event-camera / neuromorphic datasets
-    NengoAdapter          — Nengo neuromorphic simulator
-    LavaAdapter           — Intel Lava / Loihi neuromorphic hardware
-    SpikeInterfaceAdapter — SpikeInterface electrophysiology pipelines
-
+Bridges to major neuronal simulation and analysis platforms.
 All adapters use lazy imports to avoid requiring optional dependencies.
-Install the extras you need:
-
-    pip install spikelink[neo]              # Neo + quantities
-    pip install spikelink[pynn]             # PyNN
-    pip install spikelink[nest]             # NEST (install separately)
-    pip install spikelink[brian2]           # Brian2
-    pip install spikelink[tonic]            # Tonic
-    pip install spikelink[nengo]            # Nengo
-    pip install spikelink[lava]             # Intel Lava
-    pip install spikelink[spikeinterface]   # SpikeInterface
-    pip install spikelink[full]             # Everything
-
-See docs/adapter_contract.md for the adapter specification.
 """
 
 
@@ -99,28 +76,12 @@ def __getattr__(name):
 
 
 __all__ = [
-    # Neo / EBRAINS
-    "NeoAdapter",
-    "NeoAdapterV2",
-    # PyNN (all backends)
-    "PyNNAdapter",
-    "PyNNAdapterV2",
-    # NEST simulator
-    "NestAdapter",
-    "NestAdapterV2",
-    # Brian2 simulator
-    "Brian2Adapter",
-    "Brian2AdapterV2",
-    # Tonic / event cameras
-    "TonicAdapter",
-    "TonicAdapterV2",
-    # Nengo neuromorphic
-    "NengoAdapter",
-    "NengoAdapterV2",
-    # Intel Lava / Loihi
-    "LavaAdapter",
-    "LavaAdapterV2",
-    # SpikeInterface electrophysiology
-    "SpikeInterfaceAdapter",
-    "SpikeInterfaceAdapterV2",
+    "NeoAdapter", "NeoAdapterV2",
+    "PyNNAdapter", "PyNNAdapterV2",
+    "NestAdapter", "NestAdapterV2",
+    "Brian2Adapter", "Brian2AdapterV2",
+    "TonicAdapter", "TonicAdapterV2",
+    "NengoAdapter", "NengoAdapterV2",
+    "LavaAdapter", "LavaAdapterV2",
+    "SpikeInterfaceAdapter", "SpikeInterfaceAdapterV2",
 ]
