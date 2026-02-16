@@ -36,7 +36,8 @@
   Dependencies: tonic (for dtype/transform verification), numpy
 ═══════════════════════════════════════════════════════════════════════════
 """
-
+import pytest
+pytest.importorskip("tonic")
 import numpy as np
 import sys
 import os
