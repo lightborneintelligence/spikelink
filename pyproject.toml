@@ -125,9 +125,10 @@ include = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "src/spikelink/tests"]
+testpaths = ["tests"]
 python_files = ["test_*.py"]
-python_functions = ["test_*"]
+norecursedirs = ["dist", "build", ".venv", "src/spikelink/tests"]
+addopts = "-ra"
 
 [tool.black]
 line-length = 100
