@@ -1,56 +1,7 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
-name = "spikelink"
-version = "0.2.0"
-description = "Spike-native transport for neuromorphic systems"
-readme = "README.md"
-license = { text = "Apache-2.0" }
-authors = [
-    { name = "Lightborne Intelligence", email = "contact@lightborneintelligence.org" }
-]
-keywords = [
-    "neuromorphic",
-    "neuromorphic-computing",
-    "spiking",
-    "spiking-neural-networks",
-    "neural",
-    "spinnaker",
-    "brainscales",
-    "neo",
-    "ebrains",
-    "brian2",
-    "tonic",
-    "dvs",
-    "event-camera",
-    "spike-train",
-    "spike-trains",
-    "event-based",
-    "signal-transport",
-    "wave-native",
-    "harmonic-transform",
-    "scientific-computing",
-]
-
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: Apache Software License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Topic :: Scientific/Engineering :: Bio-Informatics",
-]
-requires-python = ">=3.9"
-dependencies = [
-    "numpy>=1.20.0",
-]
+# ═══════════════════════════════════════════════════════════════════════════
+# PYPROJECT.TOML PATCH — Add these optional dependencies
+# ═══════════════════════════════════════════════════════════════════════════
+# Add/update this section in your pyproject.toml:
 
 [project.optional-dependencies]
 # Platform adapters
@@ -64,25 +15,50 @@ brian2 = [
 tonic = [
     "tonic>=1.0.0",
 ]
+pynn = [
+    "PyNN>=0.10.0",
+]
+nest = []  # NEST installed separately via system package
+nengo = [
+    "nengo>=3.0.0",
+]
+lava = [
+    "lava-nc>=0.5.0",
+]
+spikeinterface = [
+    "spikeinterface>=0.99.0",
+]
+
 # Analysis tools
 elephant = [
     "elephant>=0.12.0",
 ]
-# Bundle: all platform adapters
+
+# Bundle: all platform adapters (except NEST which requires system install)
 adapters = [
     "neo>=0.12.0",
     "quantities>=0.14.0",
     "brian2>=2.5.0",
     "tonic>=1.0.0",
+    "PyNN>=0.10.0",
+    "nengo>=3.0.0",
+    "lava-nc>=0.5.0",
+    "spikeinterface>=0.99.0",
 ]
+
 # Bundle: everything
 full = [
     "neo>=0.12.0",
     "quantities>=0.14.0",
     "brian2>=2.5.0",
     "tonic>=1.0.0",
+    "PyNN>=0.10.0",
+    "nengo>=3.0.0",
+    "lava-nc>=0.5.0",
+    "spikeinterface>=0.99.0",
     "elephant>=0.12.0",
 ]
+
 # Development
 dev = [
     "pytest>=7.0.0",
@@ -91,40 +67,3 @@ dev = [
     "ruff>=0.1.0",
     "mypy>=1.0.0",
 ]
-
-[project.urls]
-Homepage = "https://lightborneintelligence.com"
-Documentation = "https://spikelink.readthedocs.io"
-Repository = "https://github.com/lightborneintelligence/spikelink"
-Issues = "https://github.com/lightborneintelligence/spikelink/issues"
-
-[tool.hatch.build.targets.sdist]
-include = [
-    "/src",
-    "/README.md",
-    "/LICENSE",
-]
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/spikelink"]
-
-[tool.hatch.build.targets.wheel.sources]
-"src" = ""
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-
-[tool.black]
-line-length = 88
-target-version = ["py39", "py310", "py311", "py312"]
-
-[tool.ruff]
-line-length = 88
-select = ["E", "F", "W", "I", "N"]
-ignore = ["E501"]
-
-[tool.mypy]
-python_version = "3.9"
-warn_return_any = true
-warn_unused_configs = true
-ignore_missing_imports = true
