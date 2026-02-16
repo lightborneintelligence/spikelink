@@ -1,4 +1,4 @@
-##SpikeLink
+SpikeLink
 
 ![PyPI](https://img.shields.io/pypi/v/spikelink)
 ![Python](https://img.shields.io/pypi/pyversions/spikelink)
@@ -10,7 +10,7 @@ Move spikes as spikes — preserving event identity, causal ordering, and bounde
 
 
 
-##What SpikeLink Is (and Isn’t)
+What SpikeLink Is (and Isn’t)
 
 SpikeLink does not replace digital computation.
 
@@ -19,7 +19,7 @@ It is a transport layer inside digital systems that carries spike symbols as spa
 Core principle: preserve event semantics — count, ordering, and timing budget — end-to-end.
 
 
-##Why SpikeLink?
+Why SpikeLink?
 
 Traditional Transport	SpikeLink
 SPIKE → ADC → BITS → DAC → SPIKE	SPIKE → SPIKELINK → SPIKE
@@ -192,6 +192,7 @@ confidence must never inflate under noise.
 
 Repository Structure
 
+'''
 spikelink/
 ├── src/spikelink/
 │   ├── api.py
@@ -210,7 +211,7 @@ spikelink/
 ├── pyproject.toml
 ├── README.md
 └── LICENSE
-
+'''
 
 
 Roadmap
