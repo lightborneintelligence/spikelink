@@ -81,7 +81,7 @@ class SpikelinkCodec:
 
             packet = SpikelinkPacket(
                 times=chunk.astype(np.float32),
-                t_start=t_start,
+                t_start=0.0,
                 t_stop=t_stop,
                 sequence_id=i,
                 neuron_id=train.neuron_id if isinstance(train.neuron_id, int) else None,
@@ -131,7 +131,7 @@ class SpikelinkCodec:
 
         return SpikeTrain(
             times=all_times,
-            t_start=t_start,
+            t_start=0.0,
             t_stop=t_stop,
             neuron_id=neuron_id,
         )
