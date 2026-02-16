@@ -19,7 +19,9 @@
   Dependencies: neo, elephant, quantities, numpy
 ═══════════════════════════════════════════════════════════════════════════
 """
-
+import pytest
+pytest.importorskip("neo")
+pytest.importorskip("quantities")
 import numpy as np
 import sys
 import os
