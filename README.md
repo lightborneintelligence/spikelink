@@ -1,11 +1,11 @@
-SpikeLink
+#SpikeLink
 
 ![PyPI](https://img.shields.io/pypi/v/spikelink)
 ![Python](https://img.shields.io/pypi/pyversions/spikelink)
 ![License](https://img.shields.io/pypi/l/spikelink)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen)
 
-Spike-native transport for neuromorphic systems.
+#Spike-native transport for neuromorphic systems.
 Move spikes as spikes — preserving event identity, causal ordering, and bounded timing — with measurable degradation under noise.
 
 
@@ -19,6 +19,7 @@ It is a transport layer inside digital systems that carries spike symbols as spa
 Core principle: preserve event semantics — count, ordering, and timing budget — end-to-end.
 
 
+
 Why SpikeLink?
 
 Traditional Transport	SpikeLink
@@ -30,6 +31,7 @@ Implicit timing distortion	Explicit timing bounds
 
 Neuromorphic systems are event-native.
 Transport should be event-native too.
+
 
 
 Transport Guarantees
@@ -50,6 +52,7 @@ docs/transport_contract.md
 SpikeLink defines transport semantics for spike-native systems operating inside conventional digital infrastructure.
 
 
+
 Key Properties
 	•	Spike-native: no mandatory ADC/DAC conversion stages for transport
 	•	Graceful degradation: precision reduces under noise, not event loss
@@ -58,13 +61,12 @@ Key Properties
 	•	Ecosystem-ready: broad adapter coverage across simulators and hardware stacks
 
 
+
 Adapter Ecosystem
 
-SpikeLink now supports a full cross-platform adapter layer:
+SpikeLink supports cross-platform adapters:
 
-
-#Adapter	Target Platform	Status
-
+Adapter	Target Platform	Status
 Neo	EBRAINS ecosystem	✅
 Brian2	Brian2 simulator	✅
 Tonic	Event camera datasets	✅
@@ -75,6 +77,7 @@ Lava	Intel Loihi (Lava stack)	✅
 SpikeInterface	Electrophysiology / spike sorting	✅
 
 All adapters preserve transport invariants and use seconds as the canonical internal time base.
+
 
 
 Validated Platforms
@@ -95,6 +98,7 @@ Platform tests enforce:
 	•	Trade-off transparency (v2 chunk mode)
 
 
+
 Timing Model (v2)
 
 SpikeLink v2 encodes absolute time using:
@@ -104,10 +108,11 @@ chunk_start_10us
 Resolution: 10 μs
 
 Two explicit modes:
-	•	Mode A — Timing-Exact: timing preserved within 10 μs quantization floor
-	•	Mode B — Chunked: reduced packet count, increased intra-chunk distortion (quantified and reported)
+	•	Mode A — Timing-Exact: timing preserved within the 10 μs quantization floor
+	•	Mode B — Chunked: reduced packet count with increased intra-chunk distortion (quantified and reported)
 
 This is a declared trade-off — not hidden behavior.
+
 
 
 Install
@@ -127,6 +132,7 @@ pip install spikelink[full]
 (Some platforms require their native simulator installed separately.)
 
 
+
 Quick Start
 
 from spikelink import SpikeTrain, SpikelinkCodec
@@ -143,6 +149,7 @@ print("Recovered:", recovered.times)
 
 
 
+
 Convenience API
 
 import spikelink
@@ -154,6 +161,8 @@ recovered = spikelink.decode(packets)
 
 ok = spikelink.verify(original, recovered)
 print("Verification:", "PASS" if ok else "FAIL")
+
+
 
 
 Neo Integration Example
@@ -174,6 +183,8 @@ recovered = codec.decode_packets(packets)
 recovered_neo = NeoAdapter.to_neo(recovered)
 
 
+
+
 Verification & Degradation Profiling
 
 from spikelink import VerificationSuite, DegradationProfiler
@@ -190,9 +201,9 @@ Degradation is designed to be monotonic:
 confidence must never inflate under noise.
 
 
+'''
 Repository Structure
 
-'''
 spikelink/
 ├── src/spikelink/
 │   ├── api.py
@@ -214,11 +225,13 @@ spikelink/
 '''
 
 
+
 Roadmap
 	•	Extended channel models (loss, jitter, interference)
 	•	Hardware packet handler (FPGA reference path)
 	•	Larger-scale event workload benchmarks
 	•	Distributed multi-node validation scenarios
+
 
 
 License
