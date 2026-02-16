@@ -20,7 +20,8 @@
   Dependencies: brian2, neo, elephant, quantities, numpy
 ═══════════════════════════════════════════════════════════════════════════
 """
-
+import pytest
+pytest.importorskip("brian2")
 import numpy as np
 import sys
 import os
