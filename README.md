@@ -1,126 +1,167 @@
-#SpikeLink
+```
+═══════════════════════════════════════════════════════════════
+ ███████╗██████╗ ██╗██╗  ██╗███████╗██╗     ██╗███╗   ██╗██╗  ██╗
+ ██╔════╝██╔══██╗██║██║ ██╔╝██╔════╝██║     ██║████╗  ██║██║ ██╔╝
+ ███████╗██████╔╝██║█████╔╝ █████╗  ██║     ██║██╔██╗ ██║█████╔╝
+ ╚════██║██╔═══╝ ██║██╔═██╗ ██╔══╝  ██║     ██║██║╚██╗██║██╔═██╗
+ ███████║██║     ██║██║  ██╗███████╗███████╗██║██║ ╚████║██║  ██╗
+ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
 
+             Spike-Native Transport Protocol v2
+═══════════════════════════════════════════════════════════════
+```
 ![PyPI](https://img.shields.io/pypi/v/spikelink)
 ![Python](https://img.shields.io/pypi/pyversions/spikelink)
 ![License](https://img.shields.io/pypi/l/spikelink)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen)
 
-#Spike-native transport for neuromorphic systems.
+---
+
+## Event-Native Transport for Neuromorphic Systems
+
 Move spikes as spikes — preserving event identity, causal ordering, and bounded timing — with measurable degradation under noise.
 
+SpikeLink defines a **formal transport contract** for spike-native computation operating inside conventional digital infrastructure.
 
+---
 
-What SpikeLink Is (and Isn’t)
+# The Problem
 
-SpikeLink does not replace digital computation.
+Neuromorphic processors (Loihi, Akida, SpiNNaker, etc.) compute using:
 
-It is a transport layer inside digital systems that carries spike symbols as sparse event structures instead of collapsing them into dense sample streams or generic packet payloads.
+* Asynchronous spikes
+* Temporal coding
+* Sparse event streams
 
-Core principle: preserve event semantics — count, ordering, and timing budget — end-to-end.
+The moment spikes leave the chip, they are typically forced through:
 
+```
+SPIKE → ADC → BITS → PACKET → BITS → DAC → SPIKE
+```
 
+This collapses temporal semantics, introduces distortion, and creates cliff-edge failure modes.
 
-Why SpikeLink?
+---
 
-Traditional Transport	SpikeLink
-SPIKE → ADC → BITS → DAC → SPIKE	SPIKE → SPIKELINK → SPIKE
-Conversion overhead	Event-native transport
-Cliff-edge failure	Graceful degradation
-Dense payloads / silence shipped	Sparse event semantics
-Implicit timing distortion	Explicit timing bounds
+# SpikeLink Approach
 
-Neuromorphic systems are event-native.
-Transport should be event-native too.
+```
+SPIKE → SPIKELINK → SPIKE
+```
 
+No forced analog collapse.
+No hidden timing drift.
+No semantic destruction.
 
+Transport preserves event structure.
 
-Transport Guarantees
+---
 
-SpikeLink is governed by a formal transport contract.
+# Chip-to-Chip Transport Model
 
-It guarantees:
-	•	Event count preservation
-	•	Causal ordering monotonicity
-	•	Explicit timing bounds
-	•	Deterministic reconstruction
-	•	Monotonic, measurable degradation under noise
+```
+┌───────────────┐         ┌────────────────┐         ┌───────────────┐
+│ Neuromorphic  │  SPIKE  │  SpikeLink     │  SPIKE  │ Neuromorphic  │
+│ Core (A)      ├────────►│  Encoder       ├────────►│ Core (B)      │
+│               │         │  + Contract    │         │               │
+└───────────────┘         └────────────────┘         └───────────────┘
+                                  │
+                                  ▼
+                         Bounded timing
+                         Causal monotonicity
+                         Count preservation
+```
 
-See full specification:
+SpikeLink packets carry **event identity**, not reconstructed waveforms.
 
+---
+
+# Transport Contract
+
+SpikeLink enforces invariants:
+
+* Event count preservation
+* Causal ordering monotonicity
+* Explicit timing bounds
+* Deterministic reconstruction
+* Monotonic degradation under noise
+
+Formal specification:
+
+```
 docs/transport_contract.md
+```
 
-SpikeLink defines transport semantics for spike-native systems operating inside conventional digital infrastructure.
+This is a declared contract — not a best-effort approximation.
 
+---
 
+# Timing Model (v2)
 
-Key Properties
-	•	Spike-native: no mandatory ADC/DAC conversion stages for transport
-	•	Graceful degradation: precision reduces under noise, not event loss
-	•	Time-coherent: explicit timing budget, no hidden drift
-	•	Deterministic: encode → decode preserves ordering and bounds
-	•	Ecosystem-ready: broad adapter coverage across simulators and hardware stacks
+Absolute time encoding:
 
-
-
-Adapter Ecosystem
-
-SpikeLink supports cross-platform adapters:
-
-Adapter	Target Platform	Status
-Neo	EBRAINS ecosystem	✅
-Brian2	Brian2 simulator	✅
-Tonic	Event camera datasets	✅
-PyNN	Multi-backend abstraction	✅
-NEST	NEST simulator	✅
-Nengo	Nengo neuromorphic framework	✅
-Lava	Intel Loihi (Lava stack)	✅
-SpikeInterface	Electrophysiology / spike sorting	✅
-
-All adapters preserve transport invariants and use seconds as the canonical internal time base.
-
-
-
-Validated Platforms
-
-SpikeLink has been validated across independent integration surfaces with invariant enforcement tests.
-
-Core validation surfaces:
-	•	Neo / EBRAINS
-	•	Brian2
-	•	Tonic-format event datasets
-	•	PyNN
-	•	NEST
-
-Platform tests enforce:
-	•	Exact spike/event count preservation
-	•	Causal ordering monotonicity
-	•	Timing budget compliance
-	•	Trade-off transparency (v2 chunk mode)
-
-
-
-Timing Model (v2)
-
-SpikeLink v2 encodes absolute time using:
-
+```
 chunk_start_10us
+```
 
-Resolution: 10 μs
+Resolution: **10 μs**
 
-Two explicit modes:
-	•	Mode A — Timing-Exact: timing preserved within the 10 μs quantization floor
-	•	Mode B — Chunked: reduced packet count with increased intra-chunk distortion (quantified and reported)
+Two modes:
 
-This is a declared trade-off — not hidden behavior.
+| Mode         | Behavior                                      |
+| ------------ | --------------------------------------------- |
+| Timing-Exact | Preserves timing within quantization floor    |
+| Chunked      | Fewer packets, bounded intra-chunk distortion |
 
+Trade-offs are explicit and measurable.
 
+---
 
-Install
+# Architecture Overview
 
+```
+spikelink/
+├── api.py                → Public interface
+├── core/                 → Codec + invariants
+├── v2/                   → Timing engine
+├── types/                → SpikeTrain + packet structs
+├── adapters/             → Neo, PyNN, NEST, Lava, etc.
+├── verification/         → Contract enforcement suite
+├── stress/               → Noise injection + degradation tests
+├── hw/                   → Hardware reference hooks
+└── waveml/               → Wave-native integration layer
+```
+
+Verification and degradation modeling are first-class components.
+
+---
+
+# Adapter Ecosystem
+
+| Adapter        | Target            | Status |
+| -------------- | ----------------- | ------ |
+| Neo            | EBRAINS           | ✅      |
+| Brian2         | Simulator         | ✅      |
+| Tonic          | Event datasets    | ✅      |
+| PyNN           | Multi-backend     | ✅      |
+| NEST           | Simulator         | ✅      |
+| Nengo          | Framework         | ✅      |
+| Lava           | Intel Loihi       | ✅      |
+| SpikeInterface | Electrophysiology | ✅      |
+
+All adapters use **seconds** as canonical time base.
+
+---
+
+# Install
+
+```bash
 pip install spikelink
+```
 
-Optional extras:
+Optional integrations:
 
+```bash
 pip install spikelink[neo]
 pip install spikelink[pynn]
 pip install spikelink[nest]
@@ -128,118 +169,73 @@ pip install spikelink[nengo]
 pip install spikelink[lava]
 pip install spikelink[spikeinterface]
 pip install spikelink[full]
+```
 
-(Some platforms require their native simulator installed separately.)
+---
 
+# Quick Start
 
-
-Quick Start
-
+```python
 from spikelink import SpikeTrain, SpikelinkCodec
 
 train = SpikeTrain(times=[0.1, 0.2, 0.3, 0.4, 0.5])
 
 codec = SpikelinkCodec()
 packets = codec.encode_train(train)
-
 recovered = codec.decode_packets(packets)
 
-print("Original: ", train.times)
-print("Recovered:", recovered.times)
+print(train.times)
+print(recovered.times)
+```
 
+---
 
+# Verification & Degradation Profiling
 
-
-Convenience API
-
-import spikelink
-
-original = [0.1, 0.2, 0.3, 0.4, 0.5]
-
-packets = spikelink.encode(original)
-recovered = spikelink.decode(packets)
-
-ok = spikelink.verify(original, recovered)
-print("Verification:", "PASS" if ok else "FAIL")
-
-
-
-
-Neo Integration Example
-
-from spikelink.adapters import NeoAdapter
-from spikelink import SpikelinkCodec
-import neo
-import quantities as pq
-
-neo_train = neo.SpikeTrain([0.1, 0.2, 0.3] * pq.s, t_stop=1.0 * pq.s)
-
-train = NeoAdapter.from_neo(neo_train)
-
-codec = SpikelinkCodec()
-packets = codec.encode_train(train)
-recovered = codec.decode_packets(packets)
-
-recovered_neo = NeoAdapter.to_neo(recovered)
-
-
-
-
-Verification & Degradation Profiling
-
+```python
 from spikelink import VerificationSuite, DegradationProfiler
 
 suite = VerificationSuite()
-results = suite.run_all()
-suite.print_results(results)
+suite.print_results(suite.run_all())
 
 profiler = DegradationProfiler()
 profile = profiler.profile(noise_levels=[0, 0.1, 1.0, 10.0])
 profiler.print_profile(profile)
+```
 
-Degradation is designed to be monotonic:
-confidence must never inflate under noise.
+Degradation must be monotonic.
+Confidence must never inflate under noise.
 
+---
 
-'''
-Repository Structure
+# Design Philosophy
 
-spikelink/
-├── src/spikelink/
-│   ├── api.py
-│   ├── types/
-│   ├── core/
-│   ├── v2/
-│   ├── adapters/
-│   ├── verification/
-│   ├── stress/
-│   ├── hw/
-│   └── waveml/
-├── tests/
-├── docs/
-│   ├── ARCHITECTURE.md
-│   └── transport_contract.md
-├── pyproject.toml
-├── README.md
-└── LICENSE
-'''
+SpikeLink does not compete with digital systems.
+It restores event semantics inside them.
 
+Neuromorphic systems are event-native.
+Transport must be event-native.
 
+---
 
-Roadmap
-	•	Extended channel models (loss, jitter, interference)
-	•	Hardware packet handler (FPGA reference path)
-	•	Larger-scale event workload benchmarks
-	•	Distributed multi-node validation scenarios
+# Roadmap
 
+* Extended channel models (loss, jitter, interference)
+* FPGA packet handler reference path
+* Distributed multi-node validation
+* Cross-chip hardware benchmarks
 
+---
 
-License
+# License
 
-Apache 2.0 — see LICENSE.
+Apache 2.0
 
+---
 
-About
+# About
 
 Lightborne Intelligence
-Truth > Consensus · Sovereignty > Control · Coherence > Speed
+
+Event semantics over collapse.
+Coherence over distortion.
