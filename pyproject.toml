@@ -143,3 +143,9 @@ ignore = ["E501"]
 python_version = "3.9"
 warn_return_any = true
 warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+norecursedirs = ["dist", "build", ".venv", "src/spikelink/tests"]
+addopts = "-ra"
