@@ -1,7 +1,52 @@
-# ═══════════════════════════════════════════════════════════════════════════
-# PYPROJECT.TOML PATCH — Add these optional dependencies
-# ═══════════════════════════════════════════════════════════════════════════
-# Add/update this section in your pyproject.toml:
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "spikelink"
+version = "0.2.0"
+description = "Spike-native transport for neuromorphic systems"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [
+    { name = "Jesus Carrasco", email = "perry@lightborneintelligence.com" }
+]
+maintainers = [
+    { name = "Lightborne Intelligence", email = "contact@lightborneintelligence.com" }
+]
+keywords = [
+    "neuromorphic",
+    "spiking",
+    "neural",
+    "transport",
+    "spike-train",
+    "EBRAINS",
+    "Neo",
+    "wave-native",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.21.0",
+]
+
+[project.urls]
+Homepage = "https://lightborneintelligence.com"
+Documentation = "https://github.com/lightborne/spikelink"
+Repository = "https://github.com/lightborne/spikelink"
+Issues = "https://github.com/lightborne/spikelink/issues"
 
 [project.optional-dependencies]
 # Platform adapters
@@ -67,3 +112,33 @@ dev = [
     "ruff>=0.1.0",
     "mypy>=1.0.0",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/spikelink"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/README.md",
+    "/LICENSE",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "src/spikelink/tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_ignores = true
